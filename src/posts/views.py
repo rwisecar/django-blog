@@ -9,7 +9,7 @@ def post_detail(request):
     return HttpResponse("<h1>Please?</h1>")
 
 def post_list(request):
-    return HttpResponse("<h1>ABC</h1>")
+    return render(request, "index.html", {})
 
 def post_update(request):
     return HttpResponse("<h1>Try This:</h1>")
