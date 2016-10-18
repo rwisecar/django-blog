@@ -1,0 +1,41 @@
+<!--DOCTYPE html-->
+
+<html>
+<head>
+  <title>{% block head_title %}Cliff Jumping{% endblock %}</title>
+</head>
+<body>
+  <section class="messages">
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+          {% if "html_safe" in message.tags %}
+            {{ message|safe }}
+          {% else %}
+            {{ message}}
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+  </section>
+  <section class="container">
+    {% block content %}
+      <section>
+        <h1>{{ title }}</h1>
+        <p>
+          {% for obj in object_list %}
+          <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a><br />
+          {{ obj.content }}<br />
+          {{ obj.timestamp }}<br />
+          {{ obj.updated }}<br />
+          {{ obj.id }}<br />
+          <br />
+          {% endfor %}
+        </p>
+      </section>
+    {% endblock %}
+  </section>
+</body>
+</html>
