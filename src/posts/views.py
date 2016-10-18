@@ -13,8 +13,6 @@ def post_create(request):
         instance.save()
         messages.success(request, "Post successfully added.")
         return HttpResponseRedirect(instance.get_absolute_url())
-    # else:
-    #     messages.error(request, "There has been a problem with your post. Please try again.")
     context = {
         "form": form,
     }
@@ -33,9 +31,9 @@ def post_list(request):
     queryset = Post.objects.all()
     context = {
         "object_list": queryset,
-        "title": "Blogy McBlogface"
+        "title": "Cliff Jumping: How to Throw Away your Career and Start Over"
     }
-    return render(request, "index.html", context)
+    return render(request, "post_list.html", context)
 
 def post_update(request, id=None):
     instance = get_object_or_404(Post, id=id)
