@@ -1,8 +1,10 @@
+{% load staticfiles %}
 <!--DOCTYPE html-->
 
 <html>
 <head>
   <title>{% block head_title %}Cliff Jumping{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
   {% include "messages_display.html" %}
