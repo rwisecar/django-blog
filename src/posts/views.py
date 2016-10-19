@@ -1,5 +1,4 @@
 from urllib import quote_plus
-from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -16,7 +15,6 @@ def post_create(request):
         instance = form.save(commit=False)
         instance.user = request.user
         instance.save()
-        messages.success(request, "Post successfully added.")
         return HttpResponseRedirect(instance.get_absolute_url())
     context = {
         "form": form,
@@ -60,7 +58,6 @@ def post_update(request, slug=None):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
-        messages.success(request, "<a href='#'>Post successfully updated.</a>", extra_tags="html_safe")
         return HttpResponseRedirect(instance.get_absolute_url())
 
     context = {
@@ -75,5 +72,4 @@ def post_delete(request, slug=None):
         raise Http404
     instance = get_object_or_404(Post, slug=slug)
     instance.delete()
-    messages.success(request, "You have successfully deleted your post.")
     return redirect("posts:list")
