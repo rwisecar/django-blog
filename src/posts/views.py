@@ -31,7 +31,7 @@ def post_list(request):
     queryset = Post.objects.all()
     context = {
         "object_list": queryset,
-        "title": "Cliff Jumping: How to Throw Away your Career and Start Over"
+        "title": "Rachael's Blog"
     }
     return render(request, "post_list.html", context)
 
