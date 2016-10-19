@@ -2,6 +2,7 @@ from urllib import quote_plus
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils import timezone
 
 from .forms import PostForm
 from .models import Post
@@ -23,6 +24,9 @@ def post_create(request):
 
 def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
+    if instance.draft or instance.publish > timezone.now().date():
+        if not request.user.is_staff or not request.user.is_superuser:
+            raise Http404
     share_string = quote_plus(instance.content)
     context = {
         "title": instance.title,
@@ -32,7 +36,11 @@ def post_detail(request, slug=None):
     return render(request, "post_detail.html", context)
 
 def post_list(request):
-    queryset_list = Post.objects.all()
+    today = timezone.now().date()
+    if not request.user.is_staff or not request.user.is_superuser:
+        queryset_list = Post.objects.active()
+    else:
+        queryset_list = Post.objects.all()
     paginator = Paginator(queryset_list, 5)
     page_request_var = "page"
     page = request.GET.get(page_request_var)
@@ -46,7 +54,8 @@ def post_list(request):
     context = {
         "object_list": queryset,
         "title": "Rachael's Blog",
-        "page_request_var": page_request_var
+        "page_request_var": page_request_var,
+        "today": today,
     }
     return render(request, "post_list.html", context)
 

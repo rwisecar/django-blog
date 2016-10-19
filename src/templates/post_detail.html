@@ -13,8 +13,9 @@
     </h1>
     <h4>
       {% if instance.draft %}<span style="color:red; font-style:italic; font-weight:bold;"> Draft </span>{% endif %}
+      <br />
     </h4>
-    <div class="fb-like" data-href="{{ request.build_absolute_uri }}" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+    <div class="fb-like col-sm-12 col-sm-offset-9" data-href="{{ request.build_absolute_uri }}" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
     {% if instance.image %}
       <img src="{{ instance.image.url }}" class="img-responsive"/>
     {% endif %}
