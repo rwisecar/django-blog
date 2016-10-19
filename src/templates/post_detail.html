@@ -13,6 +13,9 @@
     {% if instance.image %}
       <img src="{{ instance.image.url }}" class="img-responsive"/>
     {% endif %}
+    {% if instance.user.get_full_name %}
+    <h4>{{ instance.user.get_full_name }}</h4>
+    {% endif %}
     <p>{{ instance.content|linebreaks }}</p>
     <br />
     <br />
