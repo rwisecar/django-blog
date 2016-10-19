@@ -19,6 +19,9 @@
     <p>{{ instance.content|linebreaks }}</p>
     <br />
     <br />
+    <div class="fb-comments" data-href="{{ request.build_absolute_uri }}" data-numposts="5">
+    </div>
+
     <p>Share on: </p>
     <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">Facebook</a>
     <a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}">Google+</a>
