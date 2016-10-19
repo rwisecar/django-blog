@@ -1,44 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
 
-  <section>
-    <h1>{{ title }}</h1>
-  </section>
-  <section>
-    {% for obj in object_list %}
-    <article class="row">
-      <article class="col-md-8 col-md-offset-2">
-        <div class="thumbnail">
-          {% if obj.image %}
-            <img src="{{ obj.image.url }}" class="img-responsive"/>
+<section>
+  <h1>{{ title }}</h1>
+  <form method="GET" action="">
+    <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search Posts"/>
+    <input type="submit" value="Search"/>
+  </form>
+</section>
+<section>
+  {% for obj in object_list %}
+  <article class="row">
+    <article class="col-md-8 col-md-offset-2">
+      <div class="thumbnail">
+        {% if obj.image %}
+          <img src="{{ obj.image.url }}" class="img-responsive"/>
+        {% endif %}
+        <div class="caption">
+          <h3>
+            <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
+            <small>{{ obj.publish }}</small>
+          </h3>
+          {% if obj.user.get_full_name %}
+            <h5>{{ obj.user.get_full_name }}</h5>
           {% endif %}
-          <div class="caption">
-            <h3>
-              <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
-              <small>{{ obj.publish }}</small>
-            </h3>
-            {% if obj.user.get_full_name %}
-              <h5>{{ obj.user.get_full_name }}</h5>
-            {% endif %}
-            <p>{{ obj.content|linebreaks|truncatechars:300 }}</p>
-            <a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">Read More...</a>
-          </div>
+          <p>{{ obj.content|linebreaks|truncatechars:300 }}</p>
+          <a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">Read More...</a>
         </div>
-      </article>
+      </div>
     </article>
-    {% endfor %}
-    <article class="pagination col-sm-3 col-sm-offset-9">
-      <span class="step-links">
-        {% if object_list.has_previous %}
-          <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}">Newer</a>
-        {% endif %}
-        <span class="current">
-          Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}
-        </span>
-        {% if object_list.has_next %}
-          <a href="?{{ page_request_var }}={{ object_list.next_page_number }}">Older</a>
-        {% endif %}
+  </article>
+  {% endfor %}
+  <article class="pagination col-sm-3 col-sm-offset-9">
+    <span class="step-links">
+      {% if object_list.has_previous %}
+        <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Newer</a>
+      {% endif %}
+      <span class="current">
+        Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}
       </span>
-    </article>
-  </section>
+      {% if object_list.has_next %}
+        <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Older</a>
+      {% endif %}
+    </span>
+  </article>
+</section>
 {% endblock %}
