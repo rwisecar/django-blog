@@ -1,19 +1,16 @@
 {% extends "base.html" %}
-{% block content %}
 
   {% block head_title %}
     {{ instance.title }} | {{ block.super }}
   {% endblock %}
-  
-  <section>
-    <h1>{{ title }}</h1>
-    <p>
-    {{ instance.title }}<br />
-    {{ instance.content }}<br />
-    {{ instance.timestamp }}<br />
-    {{ instance.updated }}<br />
-    {{ instance.id }}<br />
+
+{% block content %}
+  <section class="col-sm-6 col-sm-offset-3">
+    <h1>{{ title }}
+      <small>{{ instance.timestamp }}</small>
+    </h1>
+    <p>{{ instance.content|linebreaks }}</p>
     <br />
-    </p>
+    <br />
   </section>
 {% endblock %}

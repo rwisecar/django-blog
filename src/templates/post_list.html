@@ -1,17 +1,27 @@
 {% extends "base.html" %}
-
 {% block content %}
+
   <section>
     <h1>{{ title }}</h1>
-    <p>
-      {% for obj in object_list %}
-      <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a><br />
-      {{ obj.content }}<br />
-      {{ obj.timestamp }}<br />
-      {{ obj.updated }}<br />
-      {{ obj.id }}<br />
-      <br />
-      {% endfor %}
-    </p>
+  </section>
+  <section>
+    {% for obj in object_list %}
+    <article class="row">
+      <article class="col-md-8 col-md-offset-2">
+        <div class="thumbnail">
+          <!-- TODO: Add user image upload dynamically via post_form.html -->
+          <img src="http://placehold.it/580x300" alt="Placeholder Image Alt Text">
+          <div class="caption">
+            <h3>
+              <a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a>
+              <small>{{ obj.timestamp|timesince }}</small>
+            </h3>
+            <p>{{ obj.content|linebreaks|truncatechars:300 }}</p>
+            <a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">Read More...</a>
+          </div>
+        </div>
+      </article>
+    </article>
+    {% endfor %}
   </section>
 {% endblock %}
